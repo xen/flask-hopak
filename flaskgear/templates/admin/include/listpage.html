@@ -1,0 +1,96 @@
+{%- macro add_list(items, title="Добавить на сайт", cancel="Отмена") %}
+{#
+ Параметр items это структура вида:
+ items = [
+   {'link':'/add_page', 'title':'Добавить страницу', 'active':True}
+  ]
+  где:
+  - link - это ссылка
+  - title - это название типа данных
+  - active, необязательный параметр который указывает что ссылка на добавление может быть показана рядом с кнопкой выбора
+#}
+
+<div id="addMenu" class="modal hide fade">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal" >&times;</a>
+    <h3>{{ title }}</h3>
+  </div>
+  <div class="modal-body">
+    <ul class="nav nav-list">
+      {% for item in items %}
+        <li><a href="{{ item.link }}">{{ item.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
+  </div>
+</div>
+
+
+<p>
+  <a data-toggle="modal" href="#addMenu" class="btn btn-info btn-small"><i class="icon-plus icon-white"></i> Добавить...</a>
+  {%- for item in items %}
+    {% if item.has_key('active') and item['active'] %}
+      <a href="{{ item.link }}">{{ item.title }}</a>
+    {% endif %}
+  {%- endfor %}
+</p>
+
+{%- endmacro %}
+
+{%- macro paginator(start=0, current=0, last=0, url='/') %}
+  {# Пока тут эта заглушка #}
+  <div class="pagination">
+    <p>XXX: переключалка тут</p>
+    {# <ul>
+      <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+      <li class="active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li class="next"><a href="#">Next &rarr;</a></li>
+    </ul> #}
+  </div>
+{%- endmacro  %}
+
+{%- macro itemstable(items, paginator, columns, actions) %}
+<table class="zebra-striped">
+  <thead>
+  <tr>
+    <th><input type="checkbox" name="ids" value="" checked=""></th>
+    {% for column in columns %}
+    <th>{{ column.title }}</th>
+    {% endfor %}
+  </tr>
+  </thead>
+  <tbody>
+  {% for item in items %}
+  <tr>
+    <th><input type="checkbox" name="ids" value="{{ item.id }}"></th>
+    {% for column in columns %}
+    <td>{{ column.render(item) }}</td>
+    {% endfor %}
+  </tr>
+  {% else %}
+    <!-- Если пусто, то выводить это -->
+
+    <tr>
+      <td colspan="{{ columns|length }}">
+        Результатов не найдено.
+      </td>
+    </tr>
+    <!-- /если пусто... -->
+
+  {% endfor %}
+  </tbody>
+</table>
+
+<div class="well">
+  {% for action in actions %}
+    <button type="submit" name="{{ action.name }}" class="btn btn-danger" value="{{ action.name }}">{{ action.title }}</button>&nbsp;
+  {% endfor %}
+</div>
+
+{%- endmacro %}

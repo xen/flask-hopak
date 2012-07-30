@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Редактирование {{model._name}}{% endblock %}
+{% block content %}
+
+  <div class="content">
+    <h1>Просмотр {{model._name}}</h1>
+
+    {{form.render_form(state='view')}}
+  </div>
+{% endblock %}

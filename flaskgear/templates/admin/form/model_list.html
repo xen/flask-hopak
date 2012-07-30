@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Список {{ model._title }}{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <h1>Список {{ model._title }}</h1>
+    {% import 'include/custom_form.html' as forms %}
+    {{ forms.add_menu(items=[
+         {'link':url_for(me.add, model=model._name), 'title':model._name, 'active':True},
+        ])
+    }}
+
+    {% if model.form(name='search', silent=True) %}
+      {{ forms.render_search(model.form('search'), url="/", state='inline_edit') }}
+    {% endif %}
+
+    {% if model.form(name='table', silent=True) %}
+      {{ forms.render_table(model.form('table'), me, model._name, objects, ) }}
+    {% else %}
+      {{ forms.render_table(model.form(), me, model._name, objects, ) }}
+    {% endif %}
+    <!-- 
+    <div state="view" class="state_switch">
+    <button class="view do_switch" to_state="edit">Edit</button>
+    <button class="edit do_switch" to_state="view">Cancel</button>
+
+    <div class="view">
+    {% for object in objects %}
+      <a href="{{ url_for(me.one, model=model._name, key=object.key()) }}"><h2>{{ object.key() }}</h2></a>
+    {% else %}
+      нихуя нет
+    {% endfor %}
+    </div>
+
+    {# XXX: temporary. should draw at runtime? #}
+    <form action="" method="POST">
+    <table class="edit" >
+        <tr>
+        {% for name,field in model.form() %}
+            <th>{{ field.title }}</th>
+        {% endfor %}
+        </tr>
+
+        {% for object in objects %}
+        {{object.render_form(state='table_edit', prefix='table__%s__'%object.key())}}
+        {% endfor %}
+    </table>
+
+    <button class="edit" >Save</button>
+    </form>
+    </div>
+-->
+
+    {% if sites %}
+    <p>
+    <a href="{{ url_for(sites) }}">Сайтики</a>
+    </p>
+    {% endif %}
+
+  </div>
+{% endblock %}

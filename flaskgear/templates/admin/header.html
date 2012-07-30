@@ -1,0 +1,33 @@
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="/">{{ admin_view.admin.name }}</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="active"><a href="/">Dashboard</a></li>
+          <li><a href="/support">Support</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <ul class="nav pull-right">
+          {# <li><a href="#">Link</a></li>
+          <li class="divider-vertical"></li> #}
+          <li class="dropdown">
+            {% if user.is_logged_in() %}
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{user.email}} <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+              </ul>
+            {% else %}
+              <a href="{{ url_for('auth.login') }}"><i class="icon-user icon-white"></i> Войти</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>

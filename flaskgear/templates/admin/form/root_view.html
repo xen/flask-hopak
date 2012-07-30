@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="content">
+    <h1>Root view</h1>
+
+    {% for model in models %}
+      <a href="{{ url_for('formgear.model.all', model=model._name) }}"><h2>{{ model._title }}</h2></a>
+      <p>{{ model._descr }}</p>
+    {% endfor %}
+
+  </div>
+{% endblock %}

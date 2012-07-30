@@ -1,0 +1,11 @@
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    {% for crumb in bread %}
+    {% if loop.last %}
+    <li class="active">{{crumb.title}}</li>
+    {% else %}
+    <li><a href="{{crumb.link}}">{{crumb.title}}</a> <span class="divider">/</span></li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+</div>

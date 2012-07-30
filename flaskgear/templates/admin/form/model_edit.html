@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Редактирование {{model._name}}{% endblock %}
+{% block content %}
+
+  <div class="content">
+    <h2>Добавление нового {{model._name}}</h2>
+    <p></p>
+
+    <form action="" method="POST" class="form-stacked">
+        <fieldset>
+            {{form.render_form()}}
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" name="save" class="btn btn-primary">Сохранить и продолжить</button>
+            <button name="return" class="btn">Сохранить и вернуться в список</button>
+        </div>
+    </form>
+  </div>
+{% endblock %}
