@@ -2,7 +2,6 @@ from flask import Flask, render_template
 
 from flask.ext import gear
 
-
 # # Create custom admin view
 # class MyAdminView(superadmin.BaseView):
 #     @superadmin.expose('/')

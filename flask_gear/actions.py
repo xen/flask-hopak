@@ -4,18 +4,18 @@ class ActionItem(object):
 
     * name - item callable name, id
     * title —  text title, for users
-    * url — where is action point to
+    * view — where is action point to
     * category — way to group actions
     * visible — is action visible to user
     * rule — is meet condition?
     * permission? — OK this is not ready
     """
-    def __init__(self, name, title, url, rule, category, visible=True):
+    def __init__(self, name, title, view, rule, category, visible=True):
         """ Action item initialisation
         """
         self.name = name
         self.title = title
-        self.url = url
+        self.view = view
         self.rule = rule
         self.category = category
         self.visible = visible
