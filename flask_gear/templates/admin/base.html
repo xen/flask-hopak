@@ -28,14 +28,20 @@
     }
   </style>
   <link href="{{ url_for('admin.static', filename='bootstrap/css/bootstrap-responsive.css') }}" rel="stylesheet" />
+  {% block edit_state %}
+  <link href="{{ url_for('admin.static', filename='/static/wysihtml5/bootstrap-wysihtml5-0.0.2.css') }}" rel="stylesheet">
+  <script src="{{ url_for('admin.static', filename='wysihtml5/bootstrap-wysihtml5-0.0.2.min.js') }}"></script>
+  <script src="{{ url_for('admin.static', filename='wysihtml5/wysihtml5-0.3.0_rc2.min.js') }}"></script>
+
+  {% endblock %}
+
   {% block include_css %}
   {% endblock %}
 
   <!-- Le fav and touch icons -->
-  <link rel="shortcut icon" href="{{ url_for('admin.static', filename='/static/favicon.png') }}">
-  {# <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"> #}
+{#   <link rel="shortcut icon" href="{{ url_for('admin.static', filename='/static/favicon.png') }}">
+ #}
+
   {% block extramedia %}{% endblock %}
   {% include "counter.html" %}
 </head>

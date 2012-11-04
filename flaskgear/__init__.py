@@ -1,2 +1,0 @@
-class Gear():
-    pass

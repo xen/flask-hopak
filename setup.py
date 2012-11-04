@@ -14,7 +14,7 @@ def desc():
 setup(
     name='Flask-Gear',
     version='0.0.1',
-    url='https://github.com/mrjoes/flask-admin/',
+    url='https://github.com/xen/flask-gear',
     license='BSD',
     author='Mikhail Kashkin (@xen), Ilya Petrov (@muromec)',
     description='Admin interface for Flask, part of formgear framework',
