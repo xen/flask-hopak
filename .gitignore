@@ -7,3 +7,5 @@ etc
 .env/
 build/
 *~
+*.sublime-workspace
+*.sublime-project
