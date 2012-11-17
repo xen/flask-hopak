@@ -1,33 +1,46 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-      <a class="brand" href="/">{{ admin_view.admin.name }}</a>
-      <div class="nav-collapse">
-        <ul class="nav">
-          <li class="active"><a href="/">Dashboard</a></li>
-          <li><a href="/support">Support</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <ul class="nav pull-right">
-          {# <li><a href="#">Link</a></li>
-          <li class="divider-vertical"></li> #}
-          <li class="dropdown">
-            {% if user.is_logged_in() %}
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{user.email}} <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-              </ul>
-            {% else %}
-              <a href="{{ url_for('auth.login') }}"><i class="icon-user icon-white"></i> Войти</a>
+      <span class="brand">{{ admin_view.admin.name }}</span>
+      <ul class="nav">
+        {% for item in admin_view.admin.menu() %}
+          {% if item.is_category() %}
+            {% set children = item.get_children() %}
+            {% if children %}
+              {% if item.is_active(admin_view) %}<li class="active dropdown">{% else %}<li class="dropdown">{% endif %}
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ item.name }}<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  {% for child in children %}
+                  {% if child.is_active(admin_view) %}<li class="active">{% else %}<li>{% endif %}
+                    <a href="{{ child.get_url() }}">{{ child.name }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
             {% endif %}
-          </li>
-        </ul>
-      </div><!--/.nav-collapse -->
+          {% else %}
+            {% if item.is_accessible() %}
+              {% if item.is_active(admin_view) %}<li class="active">{% else %}<li>{% endif %}
+                <a href="{{ item.get_url() }}">{{ item.name }}</a>
+              </li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </ul>
+{#       <ul class="nav pull-right">
+        <li class="dropdown">
+          {% if user.is_logged_in() %}
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{user.email}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            </ul>
+          {% else %}
+            <a href="{{ url_for('auth.login') }}"><i class="icon-user icon-white"></i> Войти</a>
+          {% endif %}
+        </li>
+      </ul>
+ #}
+
     </div>
   </div>
 </div>

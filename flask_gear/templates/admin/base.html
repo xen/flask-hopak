@@ -2,13 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Admin page{% endblock %} — Formgear</title>
+  <title>{% block title %}{% if admin_view.category %}{{ admin_view.category }} - {% endif %}{{ admin_view.name }} - {{ admin_view.admin.name }}{% endblock %}</title>
   <meta name="description" content="">
   <meta name="author" content="">
-  <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-  <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
 
   <!-- Le javascript -->
   <script src="{{ url_for('admin.static', filename='js/jquery-1.7.min.js') }}"></script>
@@ -39,16 +35,20 @@
   {% endblock %}
 
   <!-- Le fav and touch icons -->
-{#   <link rel="shortcut icon" href="{{ url_for('admin.static', filename='/static/favicon.png') }}">
- #}
+  <link rel="shortcut icon" href="{{ url_for('admin.static', filename='favicon.png') }}">
+
 
   {% block extramedia %}{% endblock %}
-  {% include "counter.html" %}
+  {% include "admin/counter.html" %}
+  {% block head %}
+  {% endblock %}
+
 </head>
 
 <body>
 {% block page_body %}
-{% include "header.html" %}
+{% include "admin/header.html" %}
+
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     {% for message in messages %}
@@ -61,24 +61,11 @@
 {% endwith %}
 
 {% block fullcontent %}
-  {% block breadcrumbs %}
-    {% include "breadcrambs.html" %}
-  {% endblock %}
+  {% block content %}{% endblock %}
+{% endblock %}
 
-  <div class="container-fluid">
-    <div class="row-fluid">
-      <div class="span3">
-        {% block aside %}
-          {% include "aside.html" %}
-        {% endblock %}
-      </div>
-      <div class="span9">
-        {% block content %}{% endblock %}
-      </div>
-    </div>
-    {% include "footer.html" %}
-  </div>
 {% endblock %}
-{% endblock %}
+
+
 </body>
 </html>

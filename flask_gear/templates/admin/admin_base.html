@@ -1,0 +1,24 @@
+{% extends 'admin/base.html' %}
+
+{% block fullcontent %}
+  {% block breadcrumbs %}
+    {% include "admin/breadcrambs.html" %}
+  {% endblock %}
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span3">
+        {% block aside %}
+          {% include "admin/aside.html" %}
+        {% endblock %}
+      </div>
+      <div class="span9">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    {% include "admin/footer.html" %}
+  </div>
+{% endblock %}
+
+{% endblock %}
+
