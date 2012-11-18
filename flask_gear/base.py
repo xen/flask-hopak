@@ -6,10 +6,8 @@ from functools import wraps
 from re import sub
 
 from flask import Blueprint, render_template, url_for, abort
-
 import formgear
-from .views import *
-from .widgets import *
+from formgear.models import ModelRegistry
 
 def expose(url='/', methods=('GET',)):
     """
@@ -294,6 +292,7 @@ class Admin(object):
                 shipped with the Flask-Admin.
         """
         self.app = app
+        self.models = []
 
         self.translations_path = translations_path
 
@@ -339,36 +338,9 @@ class Admin(object):
             self.app.register_blueprint(view.create_blueprint(self))
             self._add_view_to_menu(view)
 
-    def locale_selector(self, f):
-        """
-            Installs locale selector for current ``Admin`` instance.
-
-            Example::
-
-                def admin_locale_selector():
-                    return request.args.get('lang', 'en')
-
-                admin = Admin(app)
-                admin.locale_selector(admin_locale_selector)
-
-            It is also possible to use the ``@admin`` decorator::
-
-                admin = Admin(app)
-
-                @admin.locale_selector
-                def admin_locale_selector():
-                    return request.args.get('lang', 'en')
-
-            Or by subclassing the ``Admin``::
-
-                class MyAdmin(Admin):
-                    def locale_selector(self):
-                        return request.args.get('lang', 'en')
-        """
-        if self.locale_selector_func is not None:
-            raise Exception('Can not add locale_selector second time.')
-
-        self.locale_selector_func = f
+    def add_model(self, model):
+        """ Register formgear model to admin views """
+        self.models.append(ModelRegistry.resolve(name, False))
 
     def _add_view_to_menu(self, view):
         """
@@ -397,7 +369,7 @@ class Admin(object):
                 Flask application instance
         """
         if self.app is not None:
-            raise Exception('Flask-Admin is already associated with an application.')
+            raise Exception('Flask-Gear is already associated with an application.')
 
         self.app = app
 
@@ -422,3 +394,6 @@ class Admin(object):
         """
         return self._menu
 
+
+from .views import *
+from .widgets import *
