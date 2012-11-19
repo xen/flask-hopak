@@ -74,131 +74,25 @@ class ModelView(BaseView):
 
     actions = None
 
+    @expose('/', methods=('GET','POST',))
+    def list(self):
+        return "list"
 
+    @expose('/+add/', methods=('GET', 'POST'))
+    def add(self):
+        return "add"
 
-# class ModelView(HandlerView):
-#     name = 'model'
-#     def dispatch_request(self, *args, **kwargs):
-#         if not hasattr(self, 'model'):
-#             assert 'model' in kwargs
-#             name = kwargs.pop('model', None) or self.model_name
-#             self.model = ModelRegistry.resolve(name, False)
+    @expose('/<pkid>/view', methods=('GET', 'POST'))
+    def view(self, pkid):
+        return "view %s" % pkid
 
-#         if not self.model:
-#             return "No", 404
+    @expose('/<pkid>/delete', methods=('GET', 'POST'))
+    def delete(self, pkid):
+        return "delete"
 
-#         return super(ModelView,self).dispatch_request(*args, **kwargs)
-
-#     def next_args(self, kw):
-#         kw['model'] = self.model
-#         return super(ModelView, self).next_args(kw)
-
-#     tpl_create = partial(render_template, 'gearviews/model_add.html')
-#     @view("/+add")
-#     def add(self,):
-#         return self.tpl_create(form=self.model, model=self.model)
-
-#     @view("/+add", methods=["POST"])
-#     def add_post(self):
-#         obj = self.model(request.form)
-
-#         if not obj.validate():
-#             return self.tpl_create(model=self.model, form=obj)
-
-#         key = obj.save()
-#         return redirect(url_for('formgear.model.one',
-#             model=obj._name, key=key))
-
-#     @view('/<key>')
-#     def one(self, key, **kw):
-#         obj= self.model.get(key = key)
-#         if not obj:
-#             return "no %s" % (self.model._name,), 404
-
-#         return self.show(obj)
-
-#     tpl_edit = partial(render_template, 'gearviews/model_edit.html')
-#     def show(self, obj):
-#         return self.tpl_edit(object=obj, model=self.model, form=obj)
-
-#     @view('/<key>', methods=['POST'])
-#     def edit(self, key,):
-#         obj= self.model.get(key = key)
-#         obj.update(request.form, raw=False)
-#         if not obj.validate():
-#             return self.show(obj)
-
-#         obj.save()
-#         return redirect(url_for('formgear.model.one',
-#             model=obj._name, key=key))
-
-#     tpl_list = partial(render_template, 'gearviews/model_list.html')
-#     @view('/')
-#     def all(self,):
-#         obj_list = self.model.all()
-#         return self.tpl_list(objects=obj_list, model=self.model)
-
-#     @view('/', methods=['POST'])
-#     def all_edit(self,):
-#         many = form_dict(request.form.items())
-#         err = False
-#         obj_list = []
-#         for key,data in many['table'].items():
-#             obj = self.model.get(key)
-#             obj.update(data)
-
-#             if obj.validate():
-#                 obj.save()
-#             else:
-#                 err = True
-
-#             obj_list.append(obj)
-
-#         if err:
-#             return self.tpl_list(objects=obj_list, model=self.model)
-
-#         flash("Saved")
-#         return redirect(url_for('formgear.model.all', model=self.model._name))
-
-# ModelView.register('/<model>')
-
-# # XXX app.before_request (bluprint context) is broken
-# @app.before_app_request
-# def check_user(*args, **kwargs):
-#     if not request.url_rule:
-#         return
-
-#     # XXX: ya black magic
-#     if not request.url_rule.endpoint.startswith('formgear.'):
-#         return
-
-#     from flaskext.auth.auth import get_current_user_data, not_logged_in
-#     if get_current_user_data() is None:
-#         return not_logged_in(None, *args, **kwargs)
-
-# @app.app_context_processor
-# def ep_name_ctx():
-#     if not request.url_rule:
-#         return {}
-
-#     return {
-#         "me": _me,
-#     }
-
-# class Me(object):
-#     def __call__(self, f=None):
-#         ep = request.url_rule.endpoint
-#         #print(ep)
-#         ep = ep[:ep.rindex('.')]
-#         if f:
-#             ep = str.join(".", [ep,f])
-#         return ep
-
-#     def __getattr__(self, name):
-#         return self(name)
-
-# _me = Me()
-
+    @expose('/<pk>/', methods=('GET', 'POST'))
+    def edit(self, pkid):
+        return "edit %s" % pkid
 
 class RootView(BaseView):
     @expose('/root/')

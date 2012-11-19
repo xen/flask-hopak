@@ -339,15 +339,17 @@ class Admin(object):
             self.app.register_blueprint(view.create_blueprint(self))
             self._add_view_to_menu(view)
 
-    def add_model(self, model):
+    def add_model(self, model, *args, **kwargs):
         """ Register formgear model to admin views """
+        from .views import ModelView
         if not isinstance(model, Model):
-            if ModelRegistry.resolve(model, False):
-                model = ModelRegistry.resolve(model, False)
+            if ModelRegistry.resolve(model._name, False):
+                model = ModelRegistry.resolve(model._name, False)
             else:
                 raise NotFoundModelException('Attempted to resolve model %s failed' % model)
 
         self.models.append(model)
+        self.add_view(ModelView(self, model, *args, **kwargs))
 
     def _add_view_to_menu(self, view):
         """
