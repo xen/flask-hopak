@@ -1,5 +1,5 @@
 Flask==0.9
--e git+git@github.com:xen/flask-gear.git@7f572318954999a8aba2ff76f88e093e1f6685a3#egg=Flask_Gear-dev
+-e git+git@github.com:xen/flask-gear.git#egg=Flask_Gear-dev
 Flask-PyMongo==0.1.3
 Jinja2==2.6
 PyYAML==3.10

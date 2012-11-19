@@ -1,0 +1,7 @@
+# post.yaml
+title: Post
+
+fields:
+  - name: title
+  - name: tags
+  - name: body

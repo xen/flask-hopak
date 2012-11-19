@@ -17,7 +17,7 @@ setup(
     url='https://github.com/xen/flask-gear',
     license='BSD',
     author='Mikhail Kashkin (@xen), Ilya Petrov (@muromec)',
-    description='Admin interface for Flask, part of formgear framework',
+    description='Admin interface for Flask that uses formgear models',
     long_description=desc(),
     packages=find_packages(),
     include_package_data=True,

@@ -7,7 +7,8 @@ from re import sub
 
 from flask import Blueprint, render_template, url_for, abort
 import formgear
-from formgear.models import ModelRegistry
+from formgear.models import Model, ModelRegistry
+from formgear.exceptions import *
 
 def expose(url='/', methods=('GET',)):
     """
@@ -340,7 +341,13 @@ class Admin(object):
 
     def add_model(self, model):
         """ Register formgear model to admin views """
-        self.models.append(ModelRegistry.resolve(name, False))
+        if not isinstance(model, Model):
+            if ModelRegistry.resolve(model, False):
+                model = ModelRegistry.resolve(model, False)
+            else:
+                raise NotFoundModelException('Attempted to resolve model %s failed' % model)
+
+        self.models.append(model)
 
     def _add_view_to_menu(self, view):
         """

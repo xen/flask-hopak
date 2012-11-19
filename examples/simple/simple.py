@@ -31,7 +31,7 @@ def index():
 
 
 if __name__ == '__main__':
-    # Create gear interface
+    # Create gear admin interface
     gear = gear.Admin()
     gear.add_view(MyGearView(category='Test'))
     gear.add_view(AnotherGearView(category='Test'))

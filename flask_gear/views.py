@@ -8,57 +8,73 @@ from formgear.utils import form_dict
 
 from . base import BaseView, expose
 
-# def view(*a, **kw):
-#     def view(f):
-#         f.rule_args = a, kw
-#         return f
+def view(*a, **kw):
+    def view(f):
+        f.rule_args = a, kw
+        return f
 
-#     if a and callable(a[0]):
-#         f = a[0]
-#         a = a[1:]
-#         return view(f)
+    if a and callable(a[0]):
+        f = a[0]
+        a = a[1:]
+        return view(f)
 
-#     return view
+    return view
 
-# class HandlerView(View):
-#     @classmethod
-#     def register(cls, url_prefix=''):
-#         for fname in dir(cls):
-#             func = getattr(cls, fname)
-#             rule_args = getattr(func, 'rule_args', None)
-#             if rule_args is None:
-#                 continue
+class HandlerView(View):
+    @classmethod
+    def register(cls, url_prefix=''):
+        for fname in dir(cls):
+            func = getattr(cls, fname)
+            rule_args = getattr(func, 'rule_args', None)
+            if rule_args is None:
+                continue
 
-#             cls.add_rule(fname, url_prefix, *rule_args)
+            cls.add_rule(fname, url_prefix, *rule_args)
 
-#     @classmethod
-#     def add_rule(cls, fname, url_prefix, rule_a, rule_kw):
-#         defaults = rule_kw.get('defaults', {})
-#         defaults['_func'] = fname
-#         rule_kw['defaults'] = defaults
+    @classmethod
+    def add_rule(cls, fname, url_prefix, rule_a, rule_kw):
+        defaults = rule_kw.get('defaults', {})
+        defaults['_func'] = fname
+        rule_kw['defaults'] = defaults
 
-#         mr_view = cls.as_view('%s.%s' % (cls.name,fname))
-#         url = url_prefix + rule_a[0]
-#         rule_a = rule_a[1:]
-#         app.add_url_rule(url, view_func=mr_view, *rule_a, **rule_kw)
+        mr_view = cls.as_view('%s.%s' % (cls.name,fname))
+        url = url_prefix + rule_a[0]
+        rule_a = rule_a[1:]
+        app.add_url_rule(url, view_func=mr_view, *rule_a, **rule_kw)
 
-#     def dispatch_request(self, *args, **kwargs):
-#         fname = kwargs.pop('_func')
-#         func = getattr(self, fname, None)
-#         if func is None:
-#             return "No", 401
+    def dispatch_request(self, *args, **kwargs):
+        fname = kwargs.pop('_func')
+        func = getattr(self, fname, None)
+        if func is None:
+            return "No", 401
 
-#         if isinstance(func, type):
-#             func = func.as_view(fname, **self.next_args({}))
+        if isinstance(func, type):
+            func = func.as_view(fname, **self.next_args({}))
 
-#         return func(*args, **kwargs)
+        return func(*args, **kwargs)
 
-#     def next_args(self, kw):
-#         return kw
+    def next_args(self, kw):
+        return kw
 
-# def method_template(method = None, **kw):
-#     assert method is not None
-#     return render_template('gearviews/model_%s.html' % method, **kw)
+def method_template(method = None, **kw):
+    assert method is not None
+    return render_template('form/%s.html' % method, **kw)
+
+
+class ModelView(BaseView):
+    """ Base model admin view """
+
+    list_per_page = 20
+    relation = []
+
+    add_template = 'admin/form/add.html'
+    edit_template = 'admin/form/edit.html'
+    list_template = 'admin/form/list.html'
+    delete_template = 'admin/form/delete.html'
+
+    actions = None
+
+
 
 # class ModelView(HandlerView):
 #     name = 'model'
@@ -194,4 +210,3 @@ class RootView(BaseView):
                 models
         )
         return render_template('form/root_view.html', models=self.models)
-
