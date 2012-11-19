@@ -68,6 +68,17 @@ class AdminViewMeta(type):
                 # Wrap views
                 setattr(cls, p, _wrap_view(attr))
 
+class Me(object):
+    def __call__(self, f=None):
+        ep = request.url_rule.endpoint
+        #print(ep)
+        ep = ep[:ep.rindex('.')]
+        if f:
+            ep = str.join(".", [ep,f])
+        return ep
+
+    def __getattr__(self, name):
+        return self(name)
 
 class BaseView(object):
     """
@@ -162,6 +173,7 @@ class BaseView(object):
         """
         # Store self as admin_view
         kwargs['admin_view'] = self
+        kwargs['me'] = Me()
 
         # Provide i18n support even if flask-babel is not installed
         # or enabled.
@@ -294,6 +306,7 @@ class Admin(object):
         """
         self.app = app
         self.models = []
+        self.datasource = []
 
         self.translations_path = translations_path
 
@@ -349,7 +362,7 @@ class Admin(object):
                 raise NotFoundModelException('Attempted to resolve model %s failed' % model)
 
         self.models.append(model)
-        self.add_view(ModelView(self, model, *args, **kwargs))
+        self.add_view(ModelView(model, *args, **kwargs))
 
     def _add_view_to_menu(self, view):
         """
@@ -370,7 +383,7 @@ class Admin(object):
         else:
             self._menu.append(MenuItem(view.name, view))
 
-    def init_app(self, app):
+    def init_app(self, app, datasource):
         """
             Register all views with Flask application.
 
@@ -381,6 +394,8 @@ class Admin(object):
             raise Exception('Flask-Gear is already associated with an application.')
 
         self.app = app
+        from formgear.ds import register_datasource
+        register_datasource(datasource)
 
         for view in self._views:
             app.register_blueprint(view.create_blueprint(self))
