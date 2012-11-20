@@ -28,4 +28,6 @@ if __name__ == '__main__':
 
     # Start app
     app.debug = True
+    #import ipdb
+    #ipdb.set_trace()
     app.run()
