@@ -5,4 +5,3 @@ Jinja2>=2.6
 PyYAML>=3.10
 Werkzeug==0.8.3
 pymongo==2.3
-wsgiref==0.1.2
