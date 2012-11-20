@@ -1,10 +1,9 @@
 Flask==0.9
--e git+git@github.com:xen/flask-gear.git#egg=Flask_Gear-dev
 Flask-PyMongo==0.1.3
 Jinja2==2.6
 PyYAML==3.10
 Werkzeug==0.8.3
 distribute==0.6.27
-formgear==0.3.5
+-e git+https://github.com/xen/formgear.git@148c6caed5a8128d9fd31ff48d6af8cfead39c81#egg=formgear-dev
 pymongo==2.3
 wsgiref==0.1.2

@@ -1,8 +1,0 @@
-{
-    "Python": {
-        "python": "/usr/local/bin/python",
-        "pythonExtraPaths": [
-            #"/Users/xen/Dev/final/alltales/etc/eggs/simplejson-2.4.0-py2.7-macosx-10.7-x86_64.egg",
-        ]
-    }
-}
