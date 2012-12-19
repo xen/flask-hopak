@@ -1,6 +1,7 @@
 *.py[co]
 .DS_Store
 .installed.cfg
+*.egg-info
 bin
 etc
 .idea
@@ -9,3 +10,4 @@ build/
 *~
 *.sublime-workspace
 *.sublime-project
+dist

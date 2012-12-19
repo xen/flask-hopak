@@ -12,12 +12,12 @@ def desc():
         return info
 
 setup(
-    name='Flask-Gear',
-    version='0.0.1',
-    url='https://github.com/xen/flask-gear',
+    name='Flask-Hopak',
+    version='0.1.0',
+    url='https://github.com/xen/flask-hopak',
     license='BSD',
     author='Mikhail Kashkin (@xen), Ilya Petrov (@muromec)',
-    description='Admin interface for Flask that uses formgear models',
+    description='Admin interface for Flask that uses Hopak models',
     long_description=desc(),
     packages=find_packages(),
     include_package_data=True,
@@ -25,13 +25,12 @@ setup(
     platforms='any',
     install_requires=[
         'Flask>=0.9',
-        'formgear',
+        'hopak',
         'Flask-PyMongo',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
-        'Framework :: Flask',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',

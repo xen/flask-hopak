@@ -1,11 +1,11 @@
 from flask import Flask, render_template
 
-from flask.ext import gear
+from flask.ext import hopak
 from flask.ext.pymongo import PyMongo
 
-from formgear.models import Model, ModelRegistry
-from formgear.utils import rel
-from formgear.ds.mongo import MongoDS
+from hopak.models import Model, ModelRegistry
+from hopak.utils import rel
+from hopak.ds.mongo import MongoDS
 
 class Post(Model):
     __yaml__=rel(__file__, 'post.yaml')
@@ -17,14 +17,14 @@ mongo = PyMongo(app)
 # Flask views
 @app.route('/')
 def index():
-    return '<a href="/gear/">Click me to get to gear!</a>'
+    return '<a href="/afmin/">Click me to get to admin!</a>'
 
 
 if __name__ == '__main__':
     # Create gear admin interface
-    gear = gear.Admin()
-    gear.add_model(Post)
-    gear.init_app(app, MongoDS(mongo))
+    admin = hopak.Admin()
+    admin.add_model(Post)
+    admin.init_app(app, MongoDS(mongo))
 
     # Start app
     app.debug = True

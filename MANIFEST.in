@@ -1,3 +1,5 @@
 include *html
 include *rst
-recursive-include formgear/templates *html
+include *md
+recursive-include flask_hopak/templates *html
+recursive-include flask_hopak/static *

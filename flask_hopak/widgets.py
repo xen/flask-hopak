@@ -1,4 +1,4 @@
-from formgear.widgets import WidgetRegistry, Widget
+from hopak.widgets import WidgetRegistry, Widget
 
 
 class WYSIWYGWidget(Widget):

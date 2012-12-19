@@ -6,9 +6,8 @@ from functools import wraps
 from re import sub
 
 from flask import Blueprint, render_template, url_for, abort
-import formgear
-from formgear.models import Model, ModelRegistry
-from formgear.exceptions import *
+from hopak.models import Model, ModelRegistry
+from hopak.exceptions import *
 
 def expose(url='/', methods=('GET',)):
     """
@@ -353,7 +352,7 @@ class Admin(object):
             self._add_view_to_menu(view)
 
     def add_model(self, model, *args, **kwargs):
-        """ Register formgear model to admin views """
+        """ Register hopak model to admin views """
         from .views import ModelView
         if not isinstance(model, Model):
             if ModelRegistry.resolve(model._name, False):
@@ -394,7 +393,7 @@ class Admin(object):
             raise Exception('Flask-Gear is already associated with an application.')
 
         self.app = app
-        from formgear.ds import register_datasource
+        from hopak.ds import register_datasource
         register_datasource(datasource)
 
         for view in self._views:

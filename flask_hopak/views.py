@@ -3,8 +3,8 @@
 from flask import render_template, g, request, redirect, url_for, flash
 from functools import partial
 from flask.views import View, MethodView
-from formgear.models import ModelRegistry
-from formgear.utils import form_dict
+from hopak.models import ModelRegistry
+from hopak.utils import form_dict
 
 from . base import BaseView, expose
 
