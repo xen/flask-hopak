@@ -10,15 +10,32 @@ class ActionItem(object):
     * rule — is meet condition?
     * permission? — OK this is not ready
     """
-    def __init__(self, name, title, view, rule, category, visible=True):
+    def __init__(self, name, view, visible=True):
         """ Action item initialisation
         """
         self.name = name
-        self.title = title
         self.view = view
-        self.rule = rule
-        self.category = category
+        self.children = []
+        self.children_urls = set()
+        self.cached_url = None
         self.visible = visible
+
+    def get_url(self):
+        if self.cached_url:
+            return self.cached_url
+
+        self.cached_url = url_for('%s.%s' % (self.view.endpoint, self.view._default_view))
+        return self.cached_url
+
+    def is_active(self, view):
+        if view == self.view:
+            return True
+
+    def is_accessible(self):
+        if self.view is None:
+            return False
+
+        return self.view.is_accessible()
 
 class ActionRegistry(object):
     """ Action items registry with access. """

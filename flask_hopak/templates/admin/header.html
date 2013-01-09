@@ -1,7 +1,7 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <span class="brand">{{ admin_view.admin.name }}</span>
+      <span class="brand"><a href="{{admin_view.admin.index_view.url}}">{{ admin_view.admin.name }}</a></span>
       <ul class="nav">
         {% for item in admin_view.admin.menu() %}
           {% if item.is_category() %}
@@ -27,19 +27,20 @@
           {% endif %}
         {% endfor %}
       </ul>
-{#       <ul class="nav pull-right">
-        <li class="dropdown">
-          {% if user.is_logged_in() %}
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{user.email}} <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-            </ul>
-          {% else %}
-            <a href="{{ url_for('auth.login') }}"><i class="icon-user icon-white"></i> Войти</a>
-          {% endif %}
-        </li>
-      </ul>
- #}
+        <ul class="nav pull-right">
+          <li class="dropdown">
+            {% if g.user %}
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                      class="icon-signal icon-white"></i> sip:{{g.user.login}} <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            {% else %}
+              <a href="/login"><i class="icon-user icon-white"></i> Login</a>
+            {% endif %}
+          </li>
+        </ul>
+
 
     </div>
   </div>
